@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import FBSDKCoreKit
+//import GoogleMaps
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -25,9 +27,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        UINavigationBar.appearance().titleTextAttributes = [
 //            NSAttributedString.Key.foregroundColor: UIColor.blue
 //         ]
-
+       // GMSServices.provideAPIKey("AIzaSyANp8Lf4CG4GKHwXRTG_yJOFD4ErOQqVv8")
         
-        return true
+        return ApplicationDelegate.shared.application(
+        application,
+        didFinishLaunchingWithOptions: launchOptions)
+    }
+    
+    func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
+        return ApplicationDelegate.shared.application(
+            app,
+            open: url,
+            sourceApplication: options[UIApplication.OpenURLOptionsKey.sourceApplication] as? String,
+            annotation: nil
+        )
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
@@ -46,6 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func applicationDidBecomeActive(_ application: UIApplication) {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+        AppEvents.activateApp()
     }
 
     func applicationWillTerminate(_ application: UIApplication) {

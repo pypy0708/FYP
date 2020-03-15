@@ -1,16 +1,59 @@
 PODS:
+  - Alamofire (5.0.2)
+  - FBSDKCoreKit (6.0.0):
+    - FBSDKCoreKit/Basics (= 6.0.0)
+    - FBSDKCoreKit/Core (= 6.0.0)
+  - FBSDKCoreKit/Basics (6.0.0)
+  - FBSDKCoreKit/Core (6.0.0):
+    - FBSDKCoreKit/Basics
+  - FBSDKLoginKit (6.0.0):
+    - FBSDKLoginKit/Login (= 6.0.0)
+  - FBSDKLoginKit/Login (6.0.0):
+    - FBSDKCoreKit (~> 6.0.0)
+  - FBSDKShareKit (6.0.0):
+    - FBSDKShareKit/Share (= 6.0.0)
+  - FBSDKShareKit/Share (6.0.0):
+    - FBSDKCoreKit (~> 6.0.0)
   - Stripe (18.4.0)
+  - SwiftyJSON (5.0.0)
 
 DEPENDENCIES:
+  - Alamofire (from `https://github.com/Alamofire/Alamofire.git`)
+  - FBSDKCoreKit
+  - FBSDKLoginKit
+  - FBSDKShareKit
   - Stripe
+  - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
 
 SPEC REPOS:
   trunk:
+    - FBSDKCoreKit
+    - FBSDKLoginKit
+    - FBSDKShareKit
     - Stripe
 
-SPEC CHECKSUMS:
-  Stripe: fa837c60f0644b488c994024ce7d9b001ea4e97c
+EXTERNAL SOURCES:
+  Alamofire:
+    :git: https://github.com/Alamofire/Alamofire.git
+  SwiftyJSON:
+    :git: https://github.com/SwiftyJSON/SwiftyJSON.git
 
-PODFILE CHECKSUM: d62aedecc7f21bbe67c9fa900517634aa2f20435
+CHECKOUT OPTIONS:
+  Alamofire:
+    :commit: eb67560abbc58e7d98e6e17daa5bd9376625f038
+    :git: https://github.com/Alamofire/Alamofire.git
+  SwiftyJSON:
+    :commit: cbf2d4955557abc1ed5debab21d20763e7ebc540
+    :git: https://github.com/SwiftyJSON/SwiftyJSON.git
+
+SPEC CHECKSUMS:
+  Alamofire: 3ba7a4db18b4f62c4a1c0e1cb39d7f3d52e10ada
+  FBSDKCoreKit: fe738b172590e622c86735b45e20d196848b54df
+  FBSDKLoginKit: fa57df1b967fe0e147b25bede6ea4e9cdf4d64be
+  FBSDKShareKit: 210dcda2603042cf73f31983fc99df4dac06f1d8
+  Stripe: fa837c60f0644b488c994024ce7d9b001ea4e97c
+  SwiftyJSON: f0574c07d8ca1644050db687067209e3033a89a0
+
+PODFILE CHECKSUM: 9fcb3089a8e7a5f5c4c9d5cb3b3ff7bf99307c08
 
 COCOAPODS: 1.8.4
