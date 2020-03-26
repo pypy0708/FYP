@@ -18,6 +18,12 @@
 		9281847A23EC08E8000A3AB4 /* OrderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9281847923EC08E8000A3AB4 /* OrderViewController.swift */; };
 		9281847C23EC1937000A3AB4 /* DeliveryOrdersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9281847B23EC1937000A3AB4 /* DeliveryOrdersTableViewController.swift */; };
 		9281848023EC1C45000A3AB4 /* DeliverySideMenuTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9281847F23EC1C45000A3AB4 /* DeliverySideMenuTableViewController.swift */; };
+		9298CCC024261C4A001FF820 /* OrderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9298CCBF24261C4A001FF820 /* OrderTableViewCell.swift */; };
+		9298CCC2242777DC001FF820 /* DeliveryDeliveryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9298CCC1242777DC001FF820 /* DeliveryDeliveryViewController.swift */; };
+		9298CCC4242789D5001FF820 /* DeliveryStatisticViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9298CCC3242789D5001FF820 /* DeliveryStatisticViewController.swift */; };
+		9298CCC6242A0EBA001FF820 /* DeliverymanOrder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9298CCC5242A0EBA001FF820 /* DeliverymanOrder.swift */; };
+		9298CCC8242A0F9C001FF820 /* DeliverymanOrderTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9298CCC7242A0F9C001FF820 /* DeliverymanOrderTableViewCell.swift */; };
+		92ADDDB7241E39CB001BEC57 /* tetingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92ADDDB6241E39CB001BEC57 /* tetingViewController.swift */; };
 		92B1A98B23E9B447007D1FA5 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B1A98A23E9B447007D1FA5 /* AppDelegate.swift */; };
 		92B1A98D23E9B447007D1FA5 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92B1A98C23E9B447007D1FA5 /* LoginViewController.swift */; };
 		92B1A99023E9B447007D1FA5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 92B1A98E23E9B447007D1FA5 /* Main.storyboard */; };
@@ -54,6 +60,12 @@
 		9281847923EC08E8000A3AB4 /* OrderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderViewController.swift; sourceTree = "<group>"; };
 		9281847B23EC1937000A3AB4 /* DeliveryOrdersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryOrdersTableViewController.swift; sourceTree = "<group>"; };
 		9281847F23EC1C45000A3AB4 /* DeliverySideMenuTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliverySideMenuTableViewController.swift; sourceTree = "<group>"; };
+		9298CCBF24261C4A001FF820 /* OrderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderTableViewCell.swift; sourceTree = "<group>"; };
+		9298CCC1242777DC001FF820 /* DeliveryDeliveryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryDeliveryViewController.swift; sourceTree = "<group>"; };
+		9298CCC3242789D5001FF820 /* DeliveryStatisticViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryStatisticViewController.swift; sourceTree = "<group>"; };
+		9298CCC5242A0EBA001FF820 /* DeliverymanOrder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliverymanOrder.swift; sourceTree = "<group>"; };
+		9298CCC7242A0F9C001FF820 /* DeliverymanOrderTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliverymanOrderTableViewCell.swift; sourceTree = "<group>"; };
+		92ADDDB6241E39CB001BEC57 /* tetingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = tetingViewController.swift; sourceTree = "<group>"; };
 		92B1A98723E9B447007D1FA5 /* FYP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FYP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		92B1A98A23E9B447007D1FA5 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		92B1A98C23E9B447007D1FA5 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -132,11 +144,15 @@
 				92B1A9A823EAC6B8007D1FA5 /* CartViewController.swift */,
 				92B1A9CD23EB2AF2007D1FA5 /* PaymentViewController.swift */,
 				9281847923EC08E8000A3AB4 /* OrderViewController.swift */,
-				9281847B23EC1937000A3AB4 /* DeliveryOrdersTableViewController.swift */,
 				9281847F23EC1C45000A3AB4 /* DeliverySideMenuTableViewController.swift */,
+				9281847B23EC1937000A3AB4 /* DeliveryOrdersTableViewController.swift */,
+				9298CCC1242777DC001FF820 /* DeliveryDeliveryViewController.swift */,
+				9298CCC3242789D5001FF820 /* DeliveryStatisticViewController.swift */,
 				92D3491E2417F36E007B7435 /* ShopTableViewCell.swift */,
 				9246AD6B2418E87C00B522B8 /* ProductTableViewCell.swift */,
 				9246AD71241A411000B522B8 /* CartTableViewCell.swift */,
+				9298CCBF24261C4A001FF820 /* OrderTableViewCell.swift */,
+				9298CCC7242A0F9C001FF820 /* DeliverymanOrderTableViewCell.swift */,
 				92B1A99123E9B448007D1FA5 /* Assets.xcassets */,
 				92B1A99323E9B448007D1FA5 /* LaunchScreen.storyboard */,
 				92B1A99623E9B448007D1FA5 /* Info.plist */,
@@ -147,10 +163,12 @@
 				9246AD6F241A262700B522B8 /* Cartfile.swift */,
 				92D3491C2417EF30007B7435 /* Shop.swift */,
 				9246AD692418E78100B522B8 /* Product.swift */,
+				9298CCC5242A0EBA001FF820 /* DeliverymanOrder.swift */,
 				921255D32416580F00C5D317 /* FBManager.swift */,
 				92D349182417BAB8007B7435 /* APIManager.swift */,
 				92D3491A2417BC40007B7435 /* Constants.swift */,
 				9246AD6D2418F62F00B522B8 /* Tools.swift */,
+				92ADDDB6241E39CB001BEC57 /* tetingViewController.swift */,
 			);
 			path = FYP;
 			sourceTree = "<group>";
@@ -177,6 +195,7 @@
 				92B1A98423E9B447007D1FA5 /* Frameworks */,
 				92B1A98523E9B447007D1FA5 /* Resources */,
 				87BC909A423FDEB1F8BE7B31 /* [CP] Embed Pods Frameworks */,
+				FA27B3A8D80A246E7B136979 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -279,6 +298,23 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FYP/Pods-FYP-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		FA27B3A8D80A246E7B136979 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FYP/Pods-FYP-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FYP/Pods-FYP-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FYP/Pods-FYP-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -290,18 +326,23 @@
 				9246AD6A2418E78100B522B8 /* Product.swift in Sources */,
 				92B1A9A123E9C214007D1FA5 /* ShopViewController.swift in Sources */,
 				9281848023EC1C45000A3AB4 /* DeliverySideMenuTableViewController.swift in Sources */,
+				9298CCC2242777DC001FF820 /* DeliveryDeliveryViewController.swift in Sources */,
 				9281847C23EC1937000A3AB4 /* DeliveryOrdersTableViewController.swift in Sources */,
+				9298CCC8242A0F9C001FF820 /* DeliverymanOrderTableViewCell.swift in Sources */,
 				9281847A23EC08E8000A3AB4 /* OrderViewController.swift in Sources */,
 				921255D42416580F00C5D317 /* FBManager.swift in Sources */,
 				92B1A98D23E9B447007D1FA5 /* LoginViewController.swift in Sources */,
 				921255D624166A6300C5D317 /* User.swift in Sources */,
 				92D3491B2417BC40007B7435 /* Constants.swift in Sources */,
 				92B1A9A723E9E48E007D1FA5 /* ProductDetailViewController.swift in Sources */,
+				9298CCC6242A0EBA001FF820 /* DeliverymanOrder.swift in Sources */,
 				92D3491D2417EF30007B7435 /* Shop.swift in Sources */,
 				92B1A98B23E9B447007D1FA5 /* AppDelegate.swift in Sources */,
+				9298CCC4242789D5001FF820 /* DeliveryStatisticViewController.swift in Sources */,
 				92B1A9A923EAC6B8007D1FA5 /* CartViewController.swift in Sources */,
 				92B1A99F23E9B899007D1FA5 /* SWRevealViewController.m in Sources */,
 				9246AD72241A411000B522B8 /* CartTableViewCell.swift in Sources */,
+				9298CCC024261C4A001FF820 /* OrderTableViewCell.swift in Sources */,
 				9246AD70241A262700B522B8 /* Cartfile.swift in Sources */,
 				92B1A9A323E9C769007D1FA5 /* CustomerSideMenuTableViewController.swift in Sources */,
 				92D349192417BAB8007B7435 /* APIManager.swift in Sources */,
@@ -309,6 +350,7 @@
 				9246AD6C2418E87C00B522B8 /* ProductTableViewCell.swift in Sources */,
 				92B1A9CE23EB2AF2007D1FA5 /* PaymentViewController.swift in Sources */,
 				92B1A9A523E9D775007D1FA5 /* ProductListTableViewController.swift in Sources */,
+				92ADDDB7241E39CB001BEC57 /* tetingViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

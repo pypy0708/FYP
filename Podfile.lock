@@ -14,6 +14,13 @@ PODS:
     - FBSDKShareKit/Share (= 6.0.0)
   - FBSDKShareKit/Share (6.0.0):
     - FBSDKCoreKit (~> 6.0.0)
+  - GoogleMaps (3.8.0):
+    - GoogleMaps/Maps (= 3.8.0)
+  - GoogleMaps/Base (3.8.0)
+  - GoogleMaps/Maps (3.8.0):
+    - GoogleMaps/Base
+  - GooglePlaces (3.8.0):
+    - GoogleMaps/Base (= 3.8.0)
   - Stripe (18.4.0)
   - SwiftyJSON (5.0.0)
 
@@ -22,6 +29,8 @@ DEPENDENCIES:
   - FBSDKCoreKit
   - FBSDKLoginKit
   - FBSDKShareKit
+  - GoogleMaps
+  - GooglePlaces
   - Stripe
   - SwiftyJSON (from `https://github.com/SwiftyJSON/SwiftyJSON.git`)
 
@@ -30,6 +39,8 @@ SPEC REPOS:
     - FBSDKCoreKit
     - FBSDKLoginKit
     - FBSDKShareKit
+    - GoogleMaps
+    - GooglePlaces
     - Stripe
 
 EXTERNAL SOURCES:
@@ -51,9 +62,11 @@ SPEC CHECKSUMS:
   FBSDKCoreKit: fe738b172590e622c86735b45e20d196848b54df
   FBSDKLoginKit: fa57df1b967fe0e147b25bede6ea4e9cdf4d64be
   FBSDKShareKit: 210dcda2603042cf73f31983fc99df4dac06f1d8
+  GoogleMaps: 7c8d66d70e4e8c300f43a7219d8fdaad7b325a9a
+  GooglePlaces: d5f70c3e9e427964fdeca1301a665d276ccd8754
   Stripe: fa837c60f0644b488c994024ce7d9b001ea4e97c
   SwiftyJSON: f0574c07d8ca1644050db687067209e3033a89a0
 
-PODFILE CHECKSUM: 9fcb3089a8e7a5f5c4c9d5cb3b3ff7bf99307c08
+PODFILE CHECKSUM: 5a778cff2af011b9cd2e1309ac6f51a0a64bce27
 
 COCOAPODS: 1.8.4

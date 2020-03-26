@@ -8,8 +8,9 @@
 
 import UIKit
 import FBSDKCoreKit
-//import GoogleMaps
-
+import GoogleMaps
+import Stripe
+import GooglePlaces
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -27,7 +28,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 //        UINavigationBar.appearance().titleTextAttributes = [
 //            NSAttributedString.Key.foregroundColor: UIColor.blue
 //         ]
-       // GMSServices.provideAPIKey("AIzaSyANp8Lf4CG4GKHwXRTG_yJOFD4ErOQqVv8")
+        GMSServices.provideAPIKey("AIzaSyANp8Lf4CG4GKHwXRTG_yJOFD4ErOQqVv8")
+        GMSPlacesClient.provideAPIKey("AIzaSyANp8Lf4CG4GKHwXRTG_yJOFD4ErOQqVv8")
+        STPPaymentConfiguration.shared().publishableKey = STRIPE_PUBLIC_KEY
         
         return ApplicationDelegate.shared.application(
         application,

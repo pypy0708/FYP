@@ -13,8 +13,6 @@ import SwiftyJSON
 class FBManager {
     //static for singleton
     static let shared = LoginManager()
-    
-    
     public class func getUserData(completionHandler: @escaping () -> Void){
         if (AccessToken.current != nil){
             GraphRequest(graphPath: "me", parameters: ["fields": "name, email, picture.type(normal)"]).start(completionHandler: { (connection, result, error) in

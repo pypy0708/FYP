@@ -8,7 +8,9 @@
 
 import UIKit
 import MapKit
+import GoogleMaps
 import CoreLocation
+import GooglePlaces
 class CartViewController: UIViewController {
     
     var locationManager: CLLocationManager!
@@ -20,9 +22,15 @@ class CartViewController: UIViewController {
     @IBOutlet weak var map: UIView!
     @IBOutlet weak var total: UIView!
     @IBOutlet weak var labeltotal: UILabel!
-    @IBOutlet weak var aMap: MKMapView!
+    @IBOutlet weak var aMap: GMSMapView!
     @IBOutlet weak var addressTextField: UITextField!
     @IBOutlet weak var payment: UIButton!
+    
+  
+    var currentLocation: CLLocation?
+    
+    var placesClient: GMSPlacesClient!
+    var zoomLevel: Float = 15.0
     //    let navBar = UINavigationBar()
     //    let menuBarButton = UIButton(type: .custom)
     //    var barButton = UIBarButtonItem()
@@ -85,7 +93,7 @@ class CartViewController: UIViewController {
             locationManager.requestAlwaysAuthorization()
             locationManager.startUpdatingLocation()
             
-            self.aMap.showsUserLocation = true
+            placesClient = GMSPlacesClient.shared()
         }
         
         //        self.setNavigationBar()
@@ -151,27 +159,50 @@ extension CartViewController: UITableViewDataSource, UITableViewDelegate{
 }
 extension CartViewController: UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        let inputaddress = textField.text
-        let geocoder = CLGeocoder()
-        Cart.currentCart.address = inputaddress
-        geocoder.geocodeAddressString(inputaddress!){ (plackmarks, error)in
-            if (error != nil ){
-                print("Error: ", error)
-            }
-                        if let placemark = plackmarks?.first{
-                            let coordinates: CLLocationCoordinate2D = placemark.location!.coordinate
-                            let region = MKCoordinateRegion(
-                                center: coordinates,
-                                span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-                            )
-                            self.aMap.setRegion(region, animated: true)
-                            self.locationManager.stopUpdatingLocation()
+        let tempinputaddress = textField.text
+        Cart.currentCart.address = tempinputaddress
+        let inputaddress = tempinputaddress?.replacingOccurrences(of: " ", with: "%20")
+
+        
+        APIManager.shared.getCoordinates(inputaddress: inputaddress!) { (lat, lng) in
+            let camera = GMSCameraPosition.camera(withLatitude: lat,
+                                                   longitude: lng,
+             zoom: 16)
+            // self.aMap.setRegion(region, animated: true)
+             self.aMap.camera = camera
+             self.locationManager.stopUpdatingLocation()
+             let marker = GMSMarker()
+            marker.position.latitude=lat
+            marker.position.longitude=lng
+             marker.map = self.aMap
             
-                            let pin = MKPointAnnotation()
-                            pin.coordinate = coordinates
+        }
+//        let geocoder = CLGeocoder()
+//        Cart.currentCart.address = inputaddress
+//        geocoder.geocodeAddressString(inputaddress!){ (plackmarks, error)in
+//            if (error != nil ){
+//                print("Error: ", error)
+//            }
+//                        if let placemark = plackmarks?.first{
+//                            let coordinates: CLLocationCoordinate2D = placemark.location!.coordinate
+//                            let region = MKCoordinateRegion(
+//                                center: coordinates,
+//                                span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
+//                            )
+//                            let camera = GMSCameraPosition.camera(withLatitude: 22.3340724,
+//                                                                  longitude: 114.190212,
+//                            zoom: 16)
+//                           // self.aMap.setRegion(region, animated: true)
+//                            self.aMap.camera = camera
+//                            self.locationManager.stopUpdatingLocation()
+//                            let marker = GMSMarker()
+//                            marker.position = coordinates
+//                            marker.map = self.aMap
+//                            let pin = MKPointAnnotation()
+//                            pin.coordinate = coordinates
             
-                            self.aMap.addAnnotation(pin)
-                        }
+                            //self.aMap.addAnnotation(pin)
+//                        }
 //            let center = CLLocationCoordinate2D(latitude: 22.3344859802915, longitude: 114.1914869802915)
 //            let region = MKCoordinateRegion(center:center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
 //            let pin = MKPointAnnotation()
@@ -179,17 +210,21 @@ extension CartViewController: UITextFieldDelegate{
 //            print(pin.coordinate)
 //
 //            self.aMap.addAnnotation(pin)
-            
+            return true
         }
-        return true
+        
     }
-}
+
 
 extension CartViewController: CLLocationManagerDelegate{
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         let location = locations.last! as CLLocation
-        let center = CLLocationCoordinate2D(latitude: location.coordinate.latitude, longitude: location.coordinate.longitude)
-        let region = MKCoordinateRegion(center: center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
-        self.aMap.setRegion(region, animated: true)
+        let camera = GMSCameraPosition.camera(withLatitude: location.coordinate.latitude,
+                                              longitude: location.coordinate.longitude,
+        zoom: 16)
+        self.aMap.camera = camera
+        aMap.isMyLocationEnabled = true
+        aMap.settings.myLocationButton = true
+
     }
 }

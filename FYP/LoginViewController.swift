@@ -14,6 +14,7 @@ class LoginViewController: UIViewController {
     var fbLoginSuccess = false
     
     
+    @IBOutlet weak var switchType: UISegmentedControl!
     @IBOutlet weak var loginButton: UIButton!
     
     @IBOutlet weak var logoutButton: UIButton!
@@ -21,6 +22,7 @@ class LoginViewController: UIViewController {
     
     
     @IBAction func facebookLogin(_ sender: Any) {
+        
         if (AccessToken.current != nil) {
             
             APIManager.shared.login(userType: userType, completionHandler: { (error ) in
@@ -31,6 +33,7 @@ class LoginViewController: UIViewController {
             })
             
         } else {
+            
             FBManager.shared.logIn(
                 permissions: ["public_profile", "email"],
                 from: self,
@@ -69,22 +72,34 @@ class LoginViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         if (AccessToken.current != nil){
+            
             logoutButton.isHidden = false
             FBManager.getUserData(completionHandler: {
                 self.loginButton.setTitle("Continue as \(User.currentUser.email!)", for: .normal)
             })
         }
-//        else {
-//            self.logoutButton.isHidden = true
-//        }
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        if (AccessToken.current != nil && fbLoginSuccess == true){
-            performSegue(withIdentifier: "CustomerView", sender: self)
+        else {
+            self.logoutButton.isHidden = true
         }
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        userType = userType.capitalized
+        
+        if (AccessToken.current != nil && fbLoginSuccess == true){
+            performSegue(withIdentifier: "\(userType)View", sender: self)
+        }
+    }
+    
+    @IBAction func switchTypeButton(_ sender: Any) {
+        let type = switchType.selectedSegmentIndex
+        
+        if type == 0{
+            userType = USERTYPE_CUSTOMER
+        }else{
+            userType = USERTYPE_DELIVERYMAN
+        }
+    }
     
 }
 

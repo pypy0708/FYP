@@ -12,5 +12,7 @@ pod 'FBSDKLoginKit'
 pod 'FBSDKShareKit'
 pod 'Alamofire', :git => 'https://github.com/Alamofire/Alamofire.git'
 pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
+pod 'GoogleMaps'
+pod 'GooglePlaces'
 
 end
