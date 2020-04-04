@@ -69,9 +69,14 @@ class APIManager{
             
             switch response.result {
             case .success:
+                //                GraphRequest(graphPath: "/me/permissions/", httpMethod: HTTPMethod.delete).start(completionHandler: { (connection, result, error) in
+                //
+                //                    if (error == nil){
+                //                        completionHandler(nil)
+                //                    }
+                //                })
                 completionHandler(nil)
                 break
-                
             case .failure(let error):
                 completionHandler(error as NSError?)
                 break
@@ -130,28 +135,11 @@ class APIManager{
         
     }
     
-    func getShops(completionHandler: @escaping (JSON?) -> Void) {
-        
-        let path = "api/customer/shops/"
+    
+    func getCategoryShops(category: String,completionHandler: @escaping (JSON?) -> Void) {
+        let path = "api/customer/shops/\(category)"
         requestServer(.get, path, nil, URLEncoding(), completionHandler)
-        //        let url = baseURL?.appendingPathComponent(path)
-        //
-        //        refreshToken {
-        //
-        //            AF.request(url!, method: .get, parameters: nil, encoding: URLEncoding(), headers: nil).responseJSON(completionHandler: { (response) in
-        //
-        //                switch response.result {
-        //                case .success(let value):
-        //                    let jsonData = JSON(value)
-        //                    completionHandler(jsonData)
-        //                    break
-        //
-        //                case .failure:
-        //                    completionHandler(nil)
-        //                    break
-        //                }
-        //            })
-        //        }
+        
     }
     
     func getProducts (shopID: Int, completionHandler: @escaping(JSON?) -> Void){
@@ -165,7 +153,7 @@ class APIManager{
         let jsonArray = array.map{ item in
             return[
                 "product_id": item.product.id!,
-                "quantity": item.quantity
+                "quantity": item.quantity,
             ]
         }
         if JSONSerialization.isValidJSONObject(jsonArray){
@@ -177,7 +165,10 @@ class APIManager{
                     "stripe_token": stripeToken,
                     "shop_id": "\(Cart.currentCart.shop!.id!)",
                     "order_details": dataString,
-                    "address": Cart.currentCart.address!
+                    "address": Cart.currentCart.address!,
+                    "customerPhone": Cart.currentCart.phone!,
+                    "customerAddress": Cart.currentCart.address!
+                    
                 ]
                 requestServer(.post, path, params, URLEncoding(), completionHandler)
             }
@@ -232,14 +223,6 @@ class APIManager{
                 //let pathDict = jsonData["routes"][0]["overview_polyline"]
                 let polyline = jsonData["routes"][0]["overview_polyline"]["points"].string!
                 print(polyline)
-//                let steps = pathDict.arrayValue
-//                var pointsArray = [String]()
-//                for step in steps{
-//                    pointsArray.append(step["polyline"]["points"].string!)
-//                }
-//                print(pointsArray)
-                
-                
                 completionHandler(polyline)
                 break
                 
@@ -254,12 +237,13 @@ class APIManager{
         requestServer(.get, path, nil, URLEncoding(), completionHandler)
     }
     
-    func acceptOrder(orderId: Int, completionHandler: @escaping (JSON?) -> Void){
+    func acceptOrder(orderId: Int,type: String, completionHandler: @escaping (JSON?) -> Void){
         let path = "api/deliveryman/orders/pick/"
         let params: [String: Any] = [
             //server does not recognise unless it is a string
             "order_id": "\(orderId)",
-            "access_token": self.accessToken
+            "access_token": self.accessToken,
+            "type": type
         ]
         requestServer(.post, path, params, URLEncoding(), completionHandler)
     }
@@ -289,10 +273,77 @@ class APIManager{
         requestServer(.get, path, params, URLEncoding(), completionHandler)
     }
     
-    func completerOrder(orderId: Int,completionHandler: @escaping (JSON?) -> Void){
+    func completerOrder(type: String,orderId: Int,completionHandler: @escaping (JSON?) -> Void){
         let path = "api/deliveryman/orders/complete/"
         let params: [String: Any] = [
             "access_token": self.accessToken,
+            "type": type,
+            "order_id": "\(orderId)"
+        ]
+        requestServer(.post, path, params, URLEncoding(), completionHandler)
+    }
+    
+    func getRevenue(completionHanlder: @escaping (JSON?) -> Void){
+        let path = "api/deliveryman/revenue"
+        let params: [String: Any] = [
+            "access_token": self.accessToken
+        ]
+        requestServer(.get, path, params, URLEncoding(), completionHanlder)
+    }
+    
+    func addCustomizedOrder(stripeToken: String, completionHandler: @escaping(JSON?) -> Void){
+        let path = "api/customer/order/addcustmized/"
+        let array = customizedCart.currentCustomizedCart.customizedCartItems
+        let jsonArray = array.map{ item in
+            return[
+                "productName": item.productName,
+                "quantity": item.quantity,
+                "price": item.price
+            ]
+        }
+        if JSONSerialization.isValidJSONObject(jsonArray){
+            do{
+                let data = try JSONSerialization.data(withJSONObject: jsonArray, options: [])
+                let dataString = NSString(data: data, encoding: String.Encoding.utf8.rawValue)!
+                let params:[ String: Any] = [
+                    "access_token": self.accessToken,
+                    "stripe_token": stripeToken,
+                    "order_details": dataString,
+                    "customerAddress": customizedCart.currentCustomizedCart.customerAddress!,
+                    "customerPhone": customizedCart.currentCustomizedCart.customerPhone!,
+                    "shopAddress": customizedCart.currentCustomizedCart.shopAddress!,
+                    "shopName": customizedCart.currentCustomizedCart.shopName!
+                ]
+                print(params)
+                requestServer(.post, path, params, URLEncoding(), completionHandler)
+            }
+            catch{
+                print("JSON Serialization failed: \(error)")
+            }
+        }
+    }
+    
+    func updateStatus(completionHandler: @escaping (JSON?) -> Void){
+        let path = "api/deliveryman/status/update/"
+        let params: [String: Any] = [
+            "access_token": self.accessToken,
+        ]
+        requestServer(.post, path, params, URLEncoding(), completionHandler)
+    }
+    
+    func getStatus(completionHandler: @escaping (JSON?) -> Void){
+        let path = "api/deliveryman/status/get/"
+        let params: [String: Any] = [
+            "access_token": self.accessToken,
+        ]
+        requestServer(.post, path, params, URLEncoding(), completionHandler)
+    }
+    
+    func pickupOrder(type: String,orderId: Int,completionHandler: @escaping (JSON?) -> Void){
+        let path = "api/deliveryman/order/pickup/"
+        let params: [String: Any] = [
+            "access_token": self.accessToken,
+            "type": type,
             "order_id": "\(orderId)"
         ]
         requestServer(.post, path, params, URLEncoding(), completionHandler)

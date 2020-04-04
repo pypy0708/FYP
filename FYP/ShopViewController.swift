@@ -10,15 +10,27 @@ import UIKit
 
 class ShopViewController: UIViewController {
     
+    @IBOutlet weak var category: UIPickerView!
+    var categories = [String]()
+    var index: Int?
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.category.delegate = self
+        self.category.dataSource = self
+        categories = ["All","Restaurant", "Supermarket", "Beverage"]
         if self.revealViewController() != nil{
-        menuBarButton.target = self.revealViewController()
-        menuBarButton.action = #selector(SWRevealViewController.revealToggle(_:))
-        self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-    }
+            menuBarButton.target = self.revealViewController()
+            menuBarButton.action = #selector(SWRevealViewController.revealToggle(_:))
+            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        }
         loadShops()
     }
+    
+//    override func viewDidAppear(_ animated: Bool) {
+//        loadShops()
+//    }
+    
+    
     @IBOutlet weak var search: UISearchBar!
     
     @IBOutlet weak var menuBarButton: UIBarButtonItem!
@@ -29,9 +41,11 @@ class ShopViewController: UIViewController {
     
     func loadShops (){
         Tools.showLoading(loading,view)
-        APIManager.shared.getShops{ (json) in
+        index = category.selectedRow(inComponent: 0)
+        APIManager.shared.getCategoryShops(category: categories[index!]){ (json) in
             if json != nil{
                 self.shops = []
+                
                 if let shopList = json!["shops"].array{
                     for item in shopList{
                         let shop = Shop(json: item)
@@ -41,13 +55,31 @@ class ShopViewController: UIViewController {
                     Tools.stopLoading(self.loading)
                 }
             }
-            
         }
     }
     
-
-
 }
+
+
+extension ShopViewController: UIPickerViewDelegate, UIPickerViewDataSource{
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return categories.count
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String?{
+        loadShops()
+        return categories[row]
+    }
+    
+    func selectedRow(inComponent component: Int) -> Int{
+        return component
+    }
+}
+
 
 extension ShopViewController: UITableViewDelegate, UITableViewDataSource{
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -70,16 +102,17 @@ extension ShopViewController: UITableViewDelegate, UITableViewDataSource{
         } else{
             shop = shops[indexPath.row]
         }
+        
         cell.shopName.text = shop.name!
         cell.shopAddress.text = shop.address!
         if let logoURL = shop.logo{
             Tools.loadImage( cell.shopLogo,  "\(logoURL)")
         }
-    
-    return cell
+        
+        return cell
     }
     
-
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ProductList"{

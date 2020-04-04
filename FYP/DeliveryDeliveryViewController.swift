@@ -10,6 +10,7 @@ import UIKit
 import GoogleMaps
 import GooglePlaces
 import CoreLocation
+import SwiftyJSON
 class DeliveryDeliveryViewController: UIViewController {
     
     @IBOutlet weak var menuBarButton: UIBarButtonItem!
@@ -21,8 +22,12 @@ class DeliveryDeliveryViewController: UIViewController {
     @IBOutlet weak var complete: UIButton!
     var locationManager: CLLocationManager!
     var orderId: Int?
+    var type: String?
+    var shopname: String?
+    var shopaddress: String?
     var shoplat: Double?
     var shoplng: Double?
+    var customeraddress: String?
     var customerlat: Double?
     var customerlng: Double?
     var deliverylat: Double?
@@ -39,7 +44,7 @@ class DeliveryDeliveryViewController: UIViewController {
             menuBarButton.target = self.revealViewController()
             menuBarButton.action = #selector(SWRevealViewController.revealToggle(_:))
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-//            self.timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.updateLocation(_ :)), userInfo: nil, repeats: true)
+            //            self.timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.updateLocation(_ :)), userInfo: nil, repeats: true)
             
         }
     }
@@ -49,23 +54,39 @@ class DeliveryDeliveryViewController: UIViewController {
     
     func loadInfo() {
         APIManager.shared.deliverymanGetOrderDetails{ (json) in
-            
-            if let id = json?["order"]["id"].int, json!["order"]["status"] == "On the way"{
-                self.timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.updateLocation(_ :)), userInfo: nil, repeats: true)
-                self.orderId = id
-                self.customerName.text = json!["order"]["customer"]["name"].string
-                self.customerAddress.text = json!["order"]["address"].string
-                self.customerIcon.image = try! UIImage(data: Data(contentsOf: URL(string: json!["order"]["customer"]["avatar"].string!)!))
-                self.customerIcon.layer.cornerRadius = 50/2
-                self.customerIcon.clipsToBounds = true
-                let source = json?["order"]["shop"]["address"].string!
-                let dest = json?["order"]["address"].string!
+            let order = json?["order"]
+            if let id = order?["id"].int, order?["status"] == "On the way" || order?["status"] == "Pickingup"{
+                if order?["type"] == "default"{
+                    self.type = "default"
+                    self.timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.updateLocation(_ :)), userInfo: nil, repeats: true)
+                    self.orderId = id
+                    self.customerName.text = order?["customer"]["name"].string
+                    self.customerAddress.text = order?["customer"]["address"].string
+                    self.customerIcon.image = try! UIImage(data: Data(contentsOf: URL(string: (order?["customer"]["avatar"].string!)!)!))
+                    self.customerIcon.layer.cornerRadius = 50/2
+                    self.customerIcon.clipsToBounds = true
+                    self.shopaddress = order?["shop"]["address"].string!
+                    self.shopname = order?["shop"]["name"].string!
+                    self.customeraddress = order?["customer"]["address"].string!
+                } else{
+                    self.timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.updateLocation(_ :)), userInfo: nil, repeats: true)
+                    self.type = "customized"
+                    self.orderId = id
+                    self.customerName.text = order?["customer"]["name"].string
+                    self.customerAddress.text = order?["customer"]["address"].string
+                    self.customerIcon.image = try! UIImage(data: Data(contentsOf: URL(string: (order?["customer"]["avatar"].string!)!)!))
+                    self.customerIcon.layer.cornerRadius = 50/2
+                    self.customerIcon.clipsToBounds = true
+                    self.shopaddress = order?["shopaddress"].string!
+                    self.shopname = order?["shopname"].string!
+                    self.customeraddress = order?["customer"]["address"].string!
+                }
                 
-                self.getLocation(source!, "Shop", { (lat,lng) in
+                self.getLocation(self.shopaddress!, "Shop:\(self.shopname!)", { (lat,lng) in
                     self.shoplat = lat
                     self.shoplng = lng
                     
-                    self.getLocation(dest!, "Customer", { (lat,lng) in
+                    self.getLocation(self.customeraddress!, "Customer", { (lat,lng) in
                         self.customerlat = lat
                         self.customerlng = lng
                         APIManager.shared.getPath(deslat: self.customerlat!, deslng: self.customerlng!, sourcelat: self.shoplat!, sourcelng: self.shoplng!) { (polyline) in
@@ -102,8 +123,8 @@ class DeliveryDeliveryViewController: UIViewController {
                 message.text = "You do not have any order now."
                 message.center = self.view.center
                 message.textAlignment = NSTextAlignment.center
-
-
+                
+                
                 self.view.addSubview(message)
                 
             }
@@ -113,11 +134,17 @@ class DeliveryDeliveryViewController: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         self.timer.invalidate()
     }
-
+    
+    @IBAction func pickupOrder(_ sender: Any) {
+        APIManager.shared.pickupOrder(type: self.type!,orderId: self.orderId!, completionHandler: { (json) in
+            
+        })
+    }
+    
     @IBAction func completeOrder(_ sender: Any) {
         let cancel = UIAlertAction(title: "Cancel", style: .cancel)
         let confirm = UIAlertAction(title: "Confirm", style: .default) { (action) in
-            APIManager.shared.completerOrder(orderId: self.orderId!, completionHandler: { (json) in
+            APIManager.shared.completerOrder(type: self.type!,orderId: self.orderId!, completionHandler: { (json) in
                 if json != nil{
                     self.timer.invalidate()
                     self.locationManager.stopUpdatingLocation()
@@ -138,6 +165,13 @@ class DeliveryDeliveryViewController: UIViewController {
         }
     }
     
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "viewdetails"{
+            let controller = segue.destination as! DeliverymanOrderDetailViewController
+            controller.type = type
+            controller.orderId = orderId
+        }
+    }
     
 }
 
@@ -156,11 +190,11 @@ extension DeliveryDeliveryViewController: GMSMapViewDelegate{
             marker.position.longitude=lng
             marker.title = title
             marker.map = self.aMap
-            if title == "Shop" {
-                let image = UIImage(named: "icons8-shop-40")
+            if title == "Customer" {
+                let image = UIImage(named: "icons8-customer-40")
                 marker.icon = image
             } else {
-                let image = UIImage(named: "icons8-customer-40")
+                let image = UIImage(named: "icons8-shop-40")
                 marker.icon = image
             }
             completionHandler(lat,lng)
@@ -183,12 +217,7 @@ extension DeliveryDeliveryViewController: CLLocationManagerDelegate{
             self.DSroute.strokeWidth = 1
             self.DSroute.strokeColor = UIColor.red
             self.DSroute.map = self.aMap
-//            self.timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.updateLocation(_ :)), userInfo: nil, repeats: true)
-
-            
-            
+            //            self.timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.updateLocation(_ :)), userInfo: nil, repeats: true)
         }
-        
-
     }
 }

@@ -12,38 +12,46 @@ import Stripe
 class PaymentViewController: UIViewController {
     
     @IBOutlet weak var cardTextField: STPPaymentCardTextField!
-    
+    var type: String?
     override func viewDidLoad() {
         super.viewDidLoad()
         
     }
     @IBAction func addOrder(_ sender: Any) {
-
+        
         APIManager.shared.getOrder { (json) in
-                
+            
             if !((json?["order"]["status"].exists())!) || json?["order"]["status"] == "Delivered" {
                 let card = STPCardParams()
                 card.number = self.cardTextField.cardNumber
                 card.expMonth = self.cardTextField.expirationMonth
                 card.expYear = self.cardTextField.expirationYear
                 card.cvc = self.cardTextField.cvc
-
+                
                 print(card)
-              
+                
                 STPAPIClient.shared().createToken(withCard: card, completion: { (token, error) in
                     
                     if let error = error {
                         print("Error:", error)
                     } else if let stripeToken = token {
-                        APIManager.shared.addOrder(stripeToken: stripeToken.tokenId) { (json) in
-                            Cart.currentCart.reset()
-                            self.performSegue(withIdentifier: "ViewOrder", sender: self)
+                        if self.type == "default"{
+                            APIManager.shared.addOrder(stripeToken: stripeToken.tokenId) { (json) in
+                                Cart.currentCart.reset()
+                                self.performSegue(withIdentifier: "ViewOrder", sender: self)
+                            }
+                        } else{
+                            APIManager.shared.addCustomizedOrder(stripeToken: stripeToken.tokenId) { (json) in
+                                customizedCart.currentCustomizedCart.reset()
+                                    self.performSegue(withIdentifier: "ViewOrder", sender: self)
+
+                            }
                         }
                     }
                 })
                 
             } else {
-
+                
                 let cancelAction = UIAlertAction(title: "OK", style: .cancel)
                 let confirmAction = UIAlertAction(title: "Go to order", style: .default, handler: { (action) in
                     self.performSegue(withIdentifier: "ViewOrder", sender: self)

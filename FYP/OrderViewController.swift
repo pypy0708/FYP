@@ -27,6 +27,10 @@ class OrderViewController: UIViewController {
     var route = GMSPolyline()
     var timer = Timer()
     var deliverymanMarker = GMSMarker()
+    var type: String?
+    var shoplocation: String?
+    var shopname: String?
+    var customerlocation: String?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -42,52 +46,63 @@ class OrderViewController: UIViewController {
     
     func getOrder() {
         APIManager.shared.getOrder{ (json) in
-            print(json!)
             let order = json?["order"]
             
             
             if order?["status"] != nil {
                 if let details = order?["order_details"].array{
-                    self.cart = details
-                    self.status.text = order?["status"].string?.uppercased()
-                    self.productTableView.reloadData()
-                }
-                if order?["status"].string != "Delivered" {
-                    self.timerFunc()
-                }
-                print(self.cart)
-                
-                let from = order?["shop"]["address"].string!
-                let to = order?["address"].string!
-                
-                self.getLocation(from!, "Shop", { (lat,lng) in
-                    self.shoplat = lat
-                    self.shoplng = lng
-                    
-                    self.getLocation(to!, "Customer", { (lat,lng) in
-                        self.customerlat = lat
-                        self.customerlng = lng
-                        APIManager.shared.getPath(deslat: self.customerlat!, deslng: self.customerlng!, sourcelat: self.shoplat!, sourcelng: self.shoplng!) { (polyline) in
-                            let path = GMSPath(fromEncodedPath: polyline)
-                            self.route.map = nil
-                            self.route = GMSPolyline(path: path)
-                            self.route.strokeWidth = 4
-                            self.route.strokeColor = UIColor.blue
-                            self.route.map = self.aMap
-                            let camera = GMSCameraPosition.camera(withLatitude: lat,
-                                                                  longitude: lng,
-                                                                  zoom: 16)
-                            self.aMap.camera = camera
-//                            self.aMap.isMyLocationEnabled = true
-//                            self.aMap.settings.myLocationButton = true
+                    if order?["type"] == "default"{
+                        self.type = "default"
+                        self.cart = details
+                        self.status.text = order?["status"].string?.uppercased()
+                        self.productTableView.reloadData()
+                        
+                        if order?["status"].string != "Delivered" {
+                            self.timerFunc()
                         }
+                        print(self.cart)
+                        
+                        self.shoplocation = order?["shop"]["address"].string!
+                        self.shopname = order?["shop"]["name"].string!
+                        self.customerlocation = order?["customer"]["address"].string!
+                    } else{
+                        self.type = "customized"
+                        self.cart = details
+                        self.status.text = order?["status"].string?.uppercased()
+                        self.productTableView.reloadData()
+                        
+                        if order?["status"].string != "Delivered" {
+                            self.timerFunc()
+                        }
+                        print(self.cart)
+                        
+                        self.shoplocation = order?["shopaddress"].string!
+                        self.shopname = order?["shopname"].string!
+                        self.customerlocation = order?["customer"]["address"].string!
+                    }
+                    self.getLocation(self.shoplocation!, "Shop:\(self.shopname!)", { (lat,lng) in
+                        self.shoplat = lat
+                        self.shoplng = lng
+                        
+                        self.getLocation(self.customerlocation!, "You", { (lat,lng) in
+                            self.customerlat = lat
+                            self.customerlng = lng
+                            APIManager.shared.getPath(deslat: self.customerlat!, deslng: self.customerlng!, sourcelat: self.shoplat!, sourcelng: self.shoplng!) { (polyline) in
+                                let path = GMSPath(fromEncodedPath: polyline)
+                                self.route.map = nil
+                                self.route = GMSPolyline(path: path)
+                                self.route.strokeWidth = 4
+                                self.route.strokeColor = UIColor.blue
+                                self.route.map = self.aMap
+                                let camera = GMSCameraPosition.camera(withLatitude: lat,
+                                                                      longitude: lng,
+                                                                      zoom: 16)
+                                self.aMap.camera = camera
+                            }
+                        })
                     })
-                })
-                
-                print(order?["status"])
+                }
             }
-            
-            
         }
     }
     
@@ -135,11 +150,14 @@ extension OrderViewController: UITableViewDelegate,UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "OrderItemCell", for: indexPath) as! OrderTableViewCell
-        
         let product = cart[indexPath.row]
         cell.quantity.text = String(product["quantity"].int!)
-        cell.name.text = product["product"]["name"].string
         cell.subTotal.text = "$\(String(product["sub_total"].float!))"
+        if type == "default"{
+            cell.name.text = product["product"]["name"].string
+        } else{
+            cell.name.text = product["productname"].string
+        }
         return cell
     }
 }
@@ -159,11 +177,11 @@ extension OrderViewController: GMSMapViewDelegate{
             marker.position.longitude=lng
             marker.title = title
             marker.map = self.aMap
-            if title == "Shop" {
-                let image = UIImage(named: "icons8-shop-40")
+            if title == "You" {
+                let image = UIImage(named: "icons8-customer-40")
                 marker.icon = image
             } else {
-                let image = UIImage(named: "icons8-customer-40")
+                let image = UIImage(named: "icons8-shop-40")
                 marker.icon = image
             }
             completionHandler(lat,lng)

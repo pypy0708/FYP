@@ -25,41 +25,14 @@ class CartViewController: UIViewController {
     @IBOutlet weak var aMap: GMSMapView!
     @IBOutlet weak var addressTextField: UITextField!
     @IBOutlet weak var payment: UIButton!
+    @IBOutlet weak var phoneTextField: UITextField!
+    @IBOutlet weak var phone: UIView!
     
-  
+    
     var currentLocation: CLLocation?
-    
+    var marker = GMSMarker()
     var placesClient: GMSPlacesClient!
-    var zoomLevel: Float = 15.0
-    //    let navBar = UINavigationBar()
-    //    let menuBarButton = UIButton(type: .custom)
-    //    var barButton = UIBarButtonItem()
-    //    func setNavigationBar() {
-    //        let navItem = UINavigationItem(title: "")
-    //
-    //        //set image for button
-    //        menuBarButton.setImage(UIImage(named: "icons8-menu-48"), for: .normal)
-    //        //add function for button
-    //        menuBarButton.addTarget(self.revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), for: .touchUpInside)
-    //        //set frame
-    //         if self.revealViewController() != nil{
-    //        menuBarButton.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-    //        }
-    //        menuBarButton.frame = CGRect(x: 0, y: 0, width: 10, height: 10)
-    //
-    //        barButton = UIBarButtonItem(customView: menuBarButton)
-    //        //assign button to navigationbar
-    //
-    //        navItem.leftBarButtonItem = barButton
-    //        navBar.setItems([navItem], animated: false)
-    //
-    //        self.view.addSubview(navBar)
-    //        navBar.translatesAutoresizingMaskIntoConstraints = false
-    //        navBar.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor).isActive = true
-    //        navBar.widthAnchor.constraint(equalTo: view.widthAnchor).isActive = true
-    //        navBar.heightAnchor.constraint(equalToConstant: 44).isActive = true
     
-    //  }
     override func viewDidLoad() {
         super.viewDidLoad()
         if self.revealViewController() != nil{
@@ -73,6 +46,7 @@ class CartViewController: UIViewController {
             self.payment.isHidden = false
             self.map.isHidden = false
             self.total.isHidden = false
+            self.phone.isHidden = false
             
             loadProducts()
         }else{
@@ -96,14 +70,7 @@ class CartViewController: UIViewController {
             placesClient = GMSPlacesClient.shared()
         }
         
-        //        self.setNavigationBar()
-        //        tableview.topAnchor.constraint(equalTo: navBar.layoutMarginsGuide.bottomAnchor).isActive = true
         
-        //        if self.revealViewController() != nil{
-        //            menuBarButton.target = self.revealViewController()
-        //            menuBarButton.action = #selector(SWRevealViewController.revealToggle(_:))
-        //            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-        //        }
     }
     
     func loadProducts(){
@@ -113,19 +80,26 @@ class CartViewController: UIViewController {
     
     
     
-    //    @objc func cart(){
-    //        print("clicked")
-    //        let homeView  = self.storyboard?.instantiateViewController(withIdentifier: "CartViewController") as! CartViewController
-    //
-    //        self.present(homeView, animated: true, completion: nil)
-    //    }
     
     @IBAction func payment(_ sender: Any) {
         if self.addressTextField.text != "" {
             Cart.currentCart.address = addressTextField.text
             self.performSegue(withIdentifier: "payment", sender: self)
+            
         }else{
-            let alert = UIAlertController(title: "No address", message: "Please input the adress", preferredStyle: .alert)
+            let alert = UIAlertController(title: "No address", message: "Please input the address.", preferredStyle: .alert)
+            let action = UIAlertAction(title: "OK", style: .default, handler: {(alert) in
+                self.addressTextField.becomeFirstResponder()
+            })
+            alert.addAction(action)
+            self.present(alert, animated: true, completion: nil)
+        }
+        if self.phoneTextField.text != "" {
+            Cart.currentCart.phone = phoneTextField.text
+            self.performSegue(withIdentifier: "payment", sender: self)
+            
+        }else{
+            let alert = UIAlertController(title: "No phone", message: "Please input the phone.", preferredStyle: .alert)
             let action = UIAlertAction(title: "OK", style: .default, handler: {(alert) in
                 self.addressTextField.becomeFirstResponder()
             })
@@ -134,7 +108,12 @@ class CartViewController: UIViewController {
         }
     }
     
-    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "payment"{
+            let controller = segue.destination as! PaymentViewController
+            controller.type = "default"
+        }
+    }
 }
 
 extension CartViewController: UITableViewDataSource, UITableViewDelegate{
@@ -156,64 +135,41 @@ extension CartViewController: UITableViewDataSource, UITableViewDelegate{
         cell.subtotal.text = "$\(cart.product.price! * Float(cart.quantity))"
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            Cart.currentCart.cartItems.remove(at: indexPath.row)
+            
+            products.deleteRows(at: [indexPath], with: .fade)
+        }
+    }
+    
+    
 }
 extension CartViewController: UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == addressTextField{
         let tempinputaddress = textField.text
         Cart.currentCart.address = tempinputaddress
         let inputaddress = tempinputaddress?.replacingOccurrences(of: " ", with: "%20")
-
-        
         APIManager.shared.getCoordinates(inputaddress: inputaddress!) { (lat, lng) in
             let camera = GMSCameraPosition.camera(withLatitude: lat,
-                                                   longitude: lng,
-             zoom: 16)
+                                                  longitude: lng,
+                                                  zoom: 16)
             // self.aMap.setRegion(region, animated: true)
-             self.aMap.camera = camera
-             self.locationManager.stopUpdatingLocation()
-             let marker = GMSMarker()
-            marker.position.latitude=lat
-            marker.position.longitude=lng
-             marker.map = self.aMap
-            
-        }
-//        let geocoder = CLGeocoder()
-//        Cart.currentCart.address = inputaddress
-//        geocoder.geocodeAddressString(inputaddress!){ (plackmarks, error)in
-//            if (error != nil ){
-//                print("Error: ", error)
-//            }
-//                        if let placemark = plackmarks?.first{
-//                            let coordinates: CLLocationCoordinate2D = placemark.location!.coordinate
-//                            let region = MKCoordinateRegion(
-//                                center: coordinates,
-//                                span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
-//                            )
-//                            let camera = GMSCameraPosition.camera(withLatitude: 22.3340724,
-//                                                                  longitude: 114.190212,
-//                            zoom: 16)
-//                           // self.aMap.setRegion(region, animated: true)
-//                            self.aMap.camera = camera
-//                            self.locationManager.stopUpdatingLocation()
-//                            let marker = GMSMarker()
-//                            marker.position = coordinates
-//                            marker.map = self.aMap
-//                            let pin = MKPointAnnotation()
-//                            pin.coordinate = coordinates
-            
-                            //self.aMap.addAnnotation(pin)
-//                        }
-//            let center = CLLocationCoordinate2D(latitude: 22.3344859802915, longitude: 114.1914869802915)
-//            let region = MKCoordinateRegion(center:center, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
-//            let pin = MKPointAnnotation()
-//            pin.coordinate = center
-//            print(pin.coordinate)
-//
-//            self.aMap.addAnnotation(pin)
-            return true
+            self.aMap.camera = camera
+            self.locationManager.stopUpdatingLocation()
+            self.marker.position.latitude=lat
+            self.marker.position.longitude=lng
+            self.marker.map = self.aMap
+            }
+        } else {
+            Cart.currentCart.phone = textField.text
         }
         
+        return true
     }
+}
 
 
 extension CartViewController: CLLocationManagerDelegate{
@@ -221,10 +177,10 @@ extension CartViewController: CLLocationManagerDelegate{
         let location = locations.last! as CLLocation
         let camera = GMSCameraPosition.camera(withLatitude: location.coordinate.latitude,
                                               longitude: location.coordinate.longitude,
-        zoom: 16)
+                                              zoom: 16)
         self.aMap.camera = camera
         aMap.isMyLocationEnabled = true
         aMap.settings.myLocationButton = true
-
+        
     }
 }

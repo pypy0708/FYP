@@ -62,6 +62,7 @@ class LoginViewController: UIViewController {
             User.currentUser.resetInfo()
             self.logoutButton.isHidden = true
             self.loginButton.setTitle("Login with Facebook", for: .normal)
+            
         }
         
         
@@ -85,7 +86,6 @@ class LoginViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         userType = userType.capitalized
-        
         if (AccessToken.current != nil && fbLoginSuccess == true){
             performSegue(withIdentifier: "\(userType)View", sender: self)
         }

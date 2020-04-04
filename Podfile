@@ -14,5 +14,6 @@ pod 'Alamofire', :git => 'https://github.com/Alamofire/Alamofire.git'
 pod 'SwiftyJSON', :git => 'https://github.com/SwiftyJSON/SwiftyJSON.git'
 pod 'GoogleMaps'
 pod 'GooglePlaces'
+pod 'Charts', :git => 'https://github.com/danielgindi/Charts.git'
 
 end

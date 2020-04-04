@@ -24,25 +24,9 @@ class ProductDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         loadProduct()
-        //        let button = UIButton(type: .custom)
-        //        //set image for button
-        //        button.setImage(UIImage(named: "icons8-shopping-cart-48"), for: .normal)
-        //        //add function for button
-        //        button.addTarget(self, action: #selector(cart), for: .touchUpInside)
-        //        //set frame
-        //        button.frame = CGRect(x: 0, y: 0, width: 10, height: 10)
-        //
-        //        let barButton = UIBarButtonItem(customView: button)
-        //        //assign button to navigationbar
-        //        self.navigationItem.rightBarButtonItem = barButton
-        //
+       
     }
-    //    @objc func cart(){
-    //        print("clicked")
-    //        let homeView  = self.storyboard?.instantiateViewController(withIdentifier: "CartViewController") as! CartViewController
-    //
-    //        self.present(homeView, animated: true, completion: nil)
-    //    }
+    
     @IBAction func increase(_ sender: Any) {
         tempQuantity += 1
         quantity.text = String(tempQuantity)
@@ -117,10 +101,6 @@ class ProductDetailViewController: UIViewController {
                 alert.addAction(cancelAction)
                 self.present(alert, animated: true, completion: nil)
             }
-            
-            
-            
-            
         })
     }
     
@@ -135,5 +115,7 @@ class ProductDetailViewController: UIViewController {
             Tools.loadImage(aImage, "\(imageURL)")
         }
     }
+    
+ 
     
 }

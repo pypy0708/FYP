@@ -30,6 +30,24 @@ class DeliverySideMenuTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
-
+    override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
+        if identifier == "DeliverymanLogout"{
+            APIManager.shared.logout(completionHandler: { (error )in
+                if error == nil {
+                    FBManager.shared.logOut()
+                    User.currentUser.resetInfo()
+                    
+                    //logout => re-render the loginview
+                    let storyboard = UIStoryboard(name: "Main", bundle: nil)
+                    let appController = storyboard.instantiateViewController(withIdentifier: "MainController") as! LoginViewController
+                    
+                    let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                    appDelegate.window!.rootViewController = appController
+                }
+            })
+            return false
+        }
+        return true
+    }
 
 }

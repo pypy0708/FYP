@@ -1,5 +1,8 @@
 PODS:
-  - Alamofire (5.0.2)
+  - Alamofire (5.0.5)
+  - Charts (3.4.0):
+    - Charts/Core (= 3.4.0)
+  - Charts/Core (3.4.0)
   - FBSDKCoreKit (6.0.0):
     - FBSDKCoreKit/Basics (= 6.0.0)
     - FBSDKCoreKit/Core (= 6.0.0)
@@ -26,6 +29,7 @@ PODS:
 
 DEPENDENCIES:
   - Alamofire (from `https://github.com/Alamofire/Alamofire.git`)
+  - Charts (from `https://github.com/danielgindi/Charts.git`)
   - FBSDKCoreKit
   - FBSDKLoginKit
   - FBSDKShareKit
@@ -46,19 +50,25 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   Alamofire:
     :git: https://github.com/Alamofire/Alamofire.git
+  Charts:
+    :git: https://github.com/danielgindi/Charts.git
   SwiftyJSON:
     :git: https://github.com/SwiftyJSON/SwiftyJSON.git
 
 CHECKOUT OPTIONS:
   Alamofire:
-    :commit: eb67560abbc58e7d98e6e17daa5bd9376625f038
+    :commit: 59037bfd28aa963a7916f1eb22a74107a3522f16
     :git: https://github.com/Alamofire/Alamofire.git
+  Charts:
+    :commit: 56effcf413ef25144fa89d8483613a0f10c7ab23
+    :git: https://github.com/danielgindi/Charts.git
   SwiftyJSON:
     :commit: cbf2d4955557abc1ed5debab21d20763e7ebc540
     :git: https://github.com/SwiftyJSON/SwiftyJSON.git
 
 SPEC CHECKSUMS:
-  Alamofire: 3ba7a4db18b4f62c4a1c0e1cb39d7f3d52e10ada
+  Alamofire: df2f8f826963b08b9a870791ad48e07a10090b2e
+  Charts: ef59ae1e7eaa53f10a16a0009c434051292ba808
   FBSDKCoreKit: fe738b172590e622c86735b45e20d196848b54df
   FBSDKLoginKit: fa57df1b967fe0e147b25bede6ea4e9cdf4d64be
   FBSDKShareKit: 210dcda2603042cf73f31983fc99df4dac06f1d8
@@ -67,6 +77,6 @@ SPEC CHECKSUMS:
   Stripe: fa837c60f0644b488c994024ce7d9b001ea4e97c
   SwiftyJSON: f0574c07d8ca1644050db687067209e3033a89a0
 
-PODFILE CHECKSUM: 5a778cff2af011b9cd2e1309ac6f51a0a64bce27
+PODFILE CHECKSUM: 6dd9d8a533e835aee2f599e4a99b2e1ba77e7e87
 
 COCOAPODS: 1.8.4
