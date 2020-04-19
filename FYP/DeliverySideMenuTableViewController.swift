@@ -24,11 +24,6 @@ class DeliverySideMenuTableViewController: UITableViewController {
         avatar.clipsToBounds = true
         view.backgroundColor = UIColor(red: 1, green: 247/255, blue: 185/255, alpha: 1.0)
 
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
     }
     override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
         if identifier == "DeliverymanLogout"{

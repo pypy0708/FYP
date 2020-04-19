@@ -82,6 +82,7 @@ class LoginViewController: UIViewController {
         else {
             self.logoutButton.isHidden = true
         }
+//        view.backgroundColor = UIColor(red: 1, green: 247/255, blue: 185/255, alpha: 1.0)
     }
     
     override func viewDidAppear(_ animated: Bool) {

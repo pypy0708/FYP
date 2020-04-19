@@ -21,6 +21,7 @@ class ShopViewController: UIViewController {
         if self.revealViewController() != nil{
             menuBarButton.target = self.revealViewController()
             menuBarButton.action = #selector(SWRevealViewController.revealToggle(_:))
+            self.navigationController!.navigationBar.backgroundColor = UIColor(red: 1, green: 247/255, blue: 185/255, alpha: 1.0)
             self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
         loadShops()

@@ -12,6 +12,7 @@ import GooglePlaces
 class DeliveryOrderViewController: UIViewController {
     
     
+    @IBOutlet weak var deliverymode: UISegmentedControl!
     @IBOutlet weak var orderTableView: UITableView!
     @IBOutlet weak var menuBarButton: UIBarButtonItem!
     var orders = [DeliverymanOrder]()
@@ -53,6 +54,11 @@ class DeliveryOrderViewController: UIViewController {
                 self.status.text = "Offline"
                 self.statusSwitch.setOn(false, animated: true)
             }
+        }
+        
+        APIManager.shared.getMode() { (json) in
+            let index = json?["mode"].int
+            self.deliverymode.selectedSegmentIndex = index!
         }
     }
     
@@ -126,6 +132,12 @@ class DeliveryOrderViewController: UIViewController {
             }
             
         }
+    }
+    
+    @IBAction func switchDeliveryMode(_ sender: Any) {
+
+            APIManager.shared.updateMode(){(json) in}
+
     }
 }
 

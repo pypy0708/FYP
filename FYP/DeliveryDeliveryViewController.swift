@@ -32,6 +32,7 @@ class DeliveryDeliveryViewController: UIViewController {
     var customerlng: Double?
     var deliverylat: Double?
     var deliverylng: Double?
+    var deliverymode: String?
     var SCroute = GMSPolyline()
     var DSroute = GMSPolyline()
     var placesClient: GMSPlacesClient!
@@ -68,6 +69,7 @@ class DeliveryDeliveryViewController: UIViewController {
                     self.shopaddress = order?["shop"]["address"].string!
                     self.shopname = order?["shop"]["name"].string!
                     self.customeraddress = order?["customer"]["address"].string!
+                    self.deliverymode = order?["deliveryman"]["type"].string!
                 } else{
                     self.timer = Timer.scheduledTimer(timeInterval: 5, target: self, selector: #selector(self.updateLocation(_ :)), userInfo: nil, repeats: true)
                     self.type = "customized"
@@ -80,6 +82,7 @@ class DeliveryDeliveryViewController: UIViewController {
                     self.shopaddress = order?["shopaddress"].string!
                     self.shopname = order?["shopname"].string!
                     self.customeraddress = order?["customer"]["address"].string!
+                    self.deliverymode = order?["deliveryman"]["type"].string!
                 }
                 
                 self.getLocation(self.shopaddress!, "Shop:\(self.shopname!)", { (lat,lng) in
@@ -89,7 +92,7 @@ class DeliveryDeliveryViewController: UIViewController {
                     self.getLocation(self.customeraddress!, "Customer", { (lat,lng) in
                         self.customerlat = lat
                         self.customerlng = lng
-                        APIManager.shared.getPath(deslat: self.customerlat!, deslng: self.customerlng!, sourcelat: self.shoplat!, sourcelng: self.shoplng!) { (polyline) in
+                        APIManager.shared.getPath(mode: self.deliverymode!,deslat: self.customerlat!, deslng: self.customerlng!, sourcelat: self.shoplat!, sourcelng: self.shoplng!) { (polyline) in
                             let path = GMSPath(fromEncodedPath: polyline)
                             //self.route.map = nil
                             self.SCroute = GMSPolyline(path: path)
@@ -209,7 +212,7 @@ extension DeliveryDeliveryViewController: CLLocationManagerDelegate{
         let location = locations.last! as CLLocation
         self.deliverylat = location.coordinate.latitude
         self.deliverylng = location.coordinate.longitude
-        APIManager.shared.getPath(deslat: self.shoplat!, deslng: self.shoplng!, sourcelat: self.deliverylat!, sourcelng: self.deliverylng!) { (polyline) in
+        APIManager.shared.getPath(mode: self.deliverymode!,deslat: self.shoplat!, deslng: self.shoplng!, sourcelat: self.deliverylat!, sourcelng: self.deliverylng!) { (polyline) in
             let path = GMSPath(fromEncodedPath: polyline)
             //self.route.map = nil
             self.DSroute.map = nil

@@ -25,12 +25,14 @@ class OrderViewController: UIViewController {
     var customerlng: Double?
     var cart = [JSON]()
     var route = GMSPolyline()
+    var aroute = GMSPolyline()
     var timer = Timer()
     var deliverymanMarker = GMSMarker()
     var type: String?
     var shoplocation: String?
     var shopname: String?
     var customerlocation: String?
+    var deliverymode: String?
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -65,6 +67,7 @@ class OrderViewController: UIViewController {
                         self.shoplocation = order?["shop"]["address"].string!
                         self.shopname = order?["shop"]["name"].string!
                         self.customerlocation = order?["customer"]["address"].string!
+                        self.deliverymode = order?["deliveryman"]["type"].string!
                     } else{
                         self.type = "customized"
                         self.cart = details
@@ -79,6 +82,7 @@ class OrderViewController: UIViewController {
                         self.shoplocation = order?["shopaddress"].string!
                         self.shopname = order?["shopname"].string!
                         self.customerlocation = order?["customer"]["address"].string!
+                        self.deliverymode = order?["deliveryman"]["type"].string!
                     }
                     self.getLocation(self.shoplocation!, "Shop:\(self.shopname!)", { (lat,lng) in
                         self.shoplat = lat
@@ -87,17 +91,28 @@ class OrderViewController: UIViewController {
                         self.getLocation(self.customerlocation!, "You", { (lat,lng) in
                             self.customerlat = lat
                             self.customerlng = lng
-                            APIManager.shared.getPath(deslat: self.customerlat!, deslng: self.customerlng!, sourcelat: self.shoplat!, sourcelng: self.shoplng!) { (polyline) in
+                            APIManager.shared.getPath(mode: self.deliverymode!,deslat: self.customerlat!, deslng: self.customerlng!, sourcelat: self.shoplat!, sourcelng: self.shoplng!) { (polyline) in
                                 let path = GMSPath(fromEncodedPath: polyline)
                                 self.route.map = nil
                                 self.route = GMSPolyline(path: path)
-                                self.route.strokeWidth = 4
+                                print("hi\(polyline)")
+                                self.route.strokeWidth = 1
                                 self.route.strokeColor = UIColor.blue
                                 self.route.map = self.aMap
                                 let camera = GMSCameraPosition.camera(withLatitude: lat,
                                                                       longitude: lng,
-                                                                      zoom: 16)
+                                                                      zoom: 15)
                                 self.aMap.camera = camera
+                            }
+                            APIManager.shared.getPath(mode: self.deliverymode!,deslat: self.shoplat!, deslng: self.shoplng!, sourcelat: self.deliverymanMarker.position.latitude, sourcelng: self.deliverymanMarker.position.longitude) { (polyline) in
+                                let path = GMSPath(fromEncodedPath: polyline)
+                                self.aroute.map = nil
+                                self.aroute = GMSPolyline(path: path)
+                                print("hi\(polyline)")
+                                self.aroute.strokeWidth = 1
+                                self.aroute.strokeColor = UIColor.red
+                                self.aroute.map = self.aMap
+                                
                             }
                         })
                     })

@@ -30,7 +30,7 @@ class DeliverymanOrderDetailViewController: UIViewController {
         APIManager.shared.deliverymanGetOrderDetails{ (json) in
             let order = json?["order"]
             
-            if order?["status"] == "On the way"{
+            if order?["status"] == "On the way" || order?["status"] == "Pickingup"{
                 if self.type == "default"{
                     self.customerName.text = order?["customer"]["name"].string
                     self.customerAddress.text = order?["customer"]["address"].string

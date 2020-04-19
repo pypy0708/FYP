@@ -7,7 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3F1C05E533EFCB4507534644 /* Pods_FYP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 33A44DBEC300C37544267F03 /* Pods_FYP.framework */; };
+		0C743B14243B1EE20034BF84 /* HistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C743B13243B1EE20034BF84 /* HistoryViewController.swift */; };
+		0C743B16243B24EE0034BF84 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C743B15243B24EE0034BF84 /* Order.swift */; };
+		0C743B18243B264A0034BF84 /* HistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C743B17243B26490034BF84 /* HistoryTableViewCell.swift */; };
+		0C743B1A2441CEAA0034BF84 /* OrderDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C743B192441CEAA0034BF84 /* OrderDetailViewController.swift */; };
+		0C743B1D244322DC0034BF84 /* DeliveryHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C743B1C244322DC0034BF84 /* DeliveryHistoryViewController.swift */; };
+		0C743B1F244328B60034BF84 /* DeliveryHistoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0C743B1E244328B60034BF84 /* DeliveryHistoryTableViewCell.swift */; };
 		921255D42416580F00C5D317 /* FBManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921255D32416580F00C5D317 /* FBManager.swift */; };
 		921255D624166A6300C5D317 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 921255D524166A6300C5D317 /* User.swift */; };
 		9246AD6A2418E78100B522B8 /* Product.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9246AD692418E78100B522B8 /* Product.swift */; };
@@ -44,12 +49,17 @@
 		92D3491B2417BC40007B7435 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D3491A2417BC40007B7435 /* Constants.swift */; };
 		92D3491D2417EF30007B7435 /* Shop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D3491C2417EF30007B7435 /* Shop.swift */; };
 		92D3491F2417F36E007B7435 /* ShopTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 92D3491E2417F36E007B7435 /* ShopTableViewCell.swift */; };
+		AB44476CA27EBA5877FBA18C /* Pods_FYP.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C958BFCBC7BF6CA648F9BB67 /* Pods_FYP.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		13AD520A9235AF61B347AE73 /* Pods-FYP.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FYP.release.xcconfig"; path = "Target Support Files/Pods-FYP/Pods-FYP.release.xcconfig"; sourceTree = "<group>"; };
-		27A7451B49B3FB321137D27D /* Pods-FYP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FYP.debug.xcconfig"; path = "Target Support Files/Pods-FYP/Pods-FYP.debug.xcconfig"; sourceTree = "<group>"; };
-		33A44DBEC300C37544267F03 /* Pods_FYP.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FYP.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0C743B13243B1EE20034BF84 /* HistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryViewController.swift; sourceTree = "<group>"; };
+		0C743B15243B24EE0034BF84 /* Order.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Order.swift; sourceTree = "<group>"; };
+		0C743B17243B26490034BF84 /* HistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HistoryTableViewCell.swift; sourceTree = "<group>"; };
+		0C743B192441CEAA0034BF84 /* OrderDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderDetailViewController.swift; sourceTree = "<group>"; };
+		0C743B1C244322DC0034BF84 /* DeliveryHistoryViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryHistoryViewController.swift; sourceTree = "<group>"; };
+		0C743B1E244328B60034BF84 /* DeliveryHistoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeliveryHistoryTableViewCell.swift; sourceTree = "<group>"; };
+		2037C2677B3867DDDD564F30 /* Pods-FYP.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FYP.release.xcconfig"; path = "Target Support Files/Pods-FYP/Pods-FYP.release.xcconfig"; sourceTree = "<group>"; };
 		921255D2241652F700C5D317 /* FYP.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = FYP.entitlements; sourceTree = "<group>"; };
 		921255D32416580F00C5D317 /* FBManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBManager.swift; sourceTree = "<group>"; };
 		921255D524166A6300C5D317 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -91,6 +101,8 @@
 		92D3491A2417BC40007B7435 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		92D3491C2417EF30007B7435 /* Shop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shop.swift; sourceTree = "<group>"; };
 		92D3491E2417F36E007B7435 /* ShopTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShopTableViewCell.swift; sourceTree = "<group>"; };
+		C958BFCBC7BF6CA648F9BB67 /* Pods_FYP.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_FYP.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E1193CAA6515A53B8394CB5E /* Pods-FYP.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-FYP.debug.xcconfig"; path = "Target Support Files/Pods-FYP/Pods-FYP.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,7 +112,7 @@
 			files = (
 				9246AD74241A4B9100B522B8 /* CoreLocation.framework in Frameworks */,
 				92B1A9AC23EAD4B9007D1FA5 /* MapKit.framework in Frameworks */,
-				3F1C05E533EFCB4507534644 /* Pods_FYP.framework in Frameworks */,
+				AB44476CA27EBA5877FBA18C /* Pods_FYP.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -110,8 +122,8 @@
 		29A35E59C6359BD2A5F55A27 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				27A7451B49B3FB321137D27D /* Pods-FYP.debug.xcconfig */,
-				13AD520A9235AF61B347AE73 /* Pods-FYP.release.xcconfig */,
+				E1193CAA6515A53B8394CB5E /* Pods-FYP.debug.xcconfig */,
+				2037C2677B3867DDDD564F30 /* Pods-FYP.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -149,17 +161,22 @@
 				9298CD6A242F2C75001FF820 /* CustomizedOrderViewController.swift */,
 				92B1A9CD23EB2AF2007D1FA5 /* PaymentViewController.swift */,
 				9281847923EC08E8000A3AB4 /* OrderViewController.swift */,
+				0C743B13243B1EE20034BF84 /* HistoryViewController.swift */,
+				0C743B192441CEAA0034BF84 /* OrderDetailViewController.swift */,
 				9281847F23EC1C45000A3AB4 /* DeliverySideMenuTableViewController.swift */,
 				9298CD62242E113B001FF820 /* DeliveryOrderViewController.swift */,
 				9298CCC1242777DC001FF820 /* DeliveryDeliveryViewController.swift */,
 				9298CCC3242789D5001FF820 /* DeliveryStatisticViewController.swift */,
 				9298CD64242E3C19001FF820 /* DeliverymanOrderDetailViewController.swift */,
+				0C743B1C244322DC0034BF84 /* DeliveryHistoryViewController.swift */,
 				92D3491E2417F36E007B7435 /* ShopTableViewCell.swift */,
 				9246AD6B2418E87C00B522B8 /* ProductTableViewCell.swift */,
 				9246AD71241A411000B522B8 /* CartTableViewCell.swift */,
 				9298CD68242F2A02001FF820 /* CustomizedOrderTableViewCell.swift */,
+				0C743B17243B26490034BF84 /* HistoryTableViewCell.swift */,
 				9298CCBF24261C4A001FF820 /* OrderTableViewCell.swift */,
 				9298CCC7242A0F9C001FF820 /* DeliverymanOrderTableViewCell.swift */,
+				0C743B1E244328B60034BF84 /* DeliveryHistoryTableViewCell.swift */,
 				92B1A99123E9B448007D1FA5 /* Assets.xcassets */,
 				92B1A99323E9B448007D1FA5 /* LaunchScreen.storyboard */,
 				92B1A99623E9B448007D1FA5 /* Info.plist */,
@@ -170,6 +187,7 @@
 				9246AD6F241A262700B522B8 /* Cartfile.swift */,
 				92D3491C2417EF30007B7435 /* Shop.swift */,
 				9246AD692418E78100B522B8 /* Product.swift */,
+				0C743B15243B24EE0034BF84 /* Order.swift */,
 				9298CCC5242A0EBA001FF820 /* DeliverymanOrder.swift */,
 				921255D32416580F00C5D317 /* FBManager.swift */,
 				92D349182417BAB8007B7435 /* APIManager.swift */,
@@ -184,7 +202,7 @@
 			children = (
 				9246AD73241A4B9100B522B8 /* CoreLocation.framework */,
 				92B1A9AB23EAD4B9007D1FA5 /* MapKit.framework */,
-				33A44DBEC300C37544267F03 /* Pods_FYP.framework */,
+				C958BFCBC7BF6CA648F9BB67 /* Pods_FYP.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -196,12 +214,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 92B1A99923E9B448007D1FA5 /* Build configuration list for PBXNativeTarget "FYP" */;
 			buildPhases = (
-				A8D98FAE6381C7F4B491EC30 /* [CP] Check Pods Manifest.lock */,
+				6264D1C71A94752E61668EF4 /* [CP] Check Pods Manifest.lock */,
 				92B1A98323E9B447007D1FA5 /* Sources */,
 				92B1A98423E9B447007D1FA5 /* Frameworks */,
 				92B1A98523E9B447007D1FA5 /* Resources */,
-				56215CA3300BE21A6C19E595 /* [CP] Embed Pods Frameworks */,
-				5C3F0B0173514AD7A495170E /* [CP] Copy Pods Resources */,
+				2ACD8D0BD45E7A7F7CB7E5B4 /* [CP] Embed Pods Frameworks */,
+				C194E17CA48C245C2A01E62C /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -265,7 +283,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		56215CA3300BE21A6C19E595 /* [CP] Embed Pods Frameworks */ = {
+		2ACD8D0BD45E7A7F7CB7E5B4 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -282,24 +300,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FYP/Pods-FYP-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		5C3F0B0173514AD7A495170E /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FYP/Pods-FYP-resources-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Copy Pods Resources";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-FYP/Pods-FYP-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FYP/Pods-FYP-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A8D98FAE6381C7F4B491EC30 /* [CP] Check Pods Manifest.lock */ = {
+		6264D1C71A94752E61668EF4 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -321,6 +322,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		C194E17CA48C245C2A01E62C /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FYP/Pods-FYP-resources-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-FYP/Pods-FYP-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-FYP/Pods-FYP-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -335,6 +353,7 @@
 				9298CCC2242777DC001FF820 /* DeliveryDeliveryViewController.swift in Sources */,
 				9298CCC8242A0F9C001FF820 /* DeliverymanOrderTableViewCell.swift in Sources */,
 				9281847A23EC08E8000A3AB4 /* OrderViewController.swift in Sources */,
+				0C743B14243B1EE20034BF84 /* HistoryViewController.swift in Sources */,
 				921255D42416580F00C5D317 /* FBManager.swift in Sources */,
 				92B1A98D23E9B447007D1FA5 /* LoginViewController.swift in Sources */,
 				921255D624166A6300C5D317 /* User.swift in Sources */,
@@ -342,9 +361,11 @@
 				92B1A9A723E9E48E007D1FA5 /* ProductDetailViewController.swift in Sources */,
 				9298CCC6242A0EBA001FF820 /* DeliverymanOrder.swift in Sources */,
 				92D3491D2417EF30007B7435 /* Shop.swift in Sources */,
+				0C743B16243B24EE0034BF84 /* Order.swift in Sources */,
 				92B1A98B23E9B447007D1FA5 /* AppDelegate.swift in Sources */,
 				9298CD69242F2A02001FF820 /* CustomizedOrderTableViewCell.swift in Sources */,
 				9298CCC4242789D5001FF820 /* DeliveryStatisticViewController.swift in Sources */,
+				0C743B1D244322DC0034BF84 /* DeliveryHistoryViewController.swift in Sources */,
 				9298CD63242E113B001FF820 /* DeliveryOrderViewController.swift in Sources */,
 				9298CD6B242F2C75001FF820 /* CustomizedOrderViewController.swift in Sources */,
 				9298CD65242E3C19001FF820 /* DeliverymanOrderDetailViewController.swift in Sources */,
@@ -352,10 +373,13 @@
 				92B1A99F23E9B899007D1FA5 /* SWRevealViewController.m in Sources */,
 				9246AD72241A411000B522B8 /* CartTableViewCell.swift in Sources */,
 				9298CCC024261C4A001FF820 /* OrderTableViewCell.swift in Sources */,
+				0C743B18243B264A0034BF84 /* HistoryTableViewCell.swift in Sources */,
 				9246AD70241A262700B522B8 /* Cartfile.swift in Sources */,
+				0C743B1A2441CEAA0034BF84 /* OrderDetailViewController.swift in Sources */,
 				92B1A9A323E9C769007D1FA5 /* CustomerSideMenuTableViewController.swift in Sources */,
 				92D349192417BAB8007B7435 /* APIManager.swift in Sources */,
 				92D3491F2417F36E007B7435 /* ShopTableViewCell.swift in Sources */,
+				0C743B1F244328B60034BF84 /* DeliveryHistoryTableViewCell.swift in Sources */,
 				9246AD6C2418E87C00B522B8 /* ProductTableViewCell.swift in Sources */,
 				92B1A9CE23EB2AF2007D1FA5 /* PaymentViewController.swift in Sources */,
 				92B1A9A523E9D775007D1FA5 /* ProductListTableViewController.swift in Sources */,
@@ -502,7 +526,7 @@
 		};
 		92B1A99A23E9B448007D1FA5 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 27A7451B49B3FB321137D27D /* Pods-FYP.debug.xcconfig */;
+			baseConfigurationReference = E1193CAA6515A53B8394CB5E /* Pods-FYP.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;
@@ -526,7 +550,7 @@
 		};
 		92B1A99B23E9B448007D1FA5 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 13AD520A9235AF61B347AE73 /* Pods-FYP.release.xcconfig */;
+			baseConfigurationReference = 2037C2677B3867DDDD564F30 /* Pods-FYP.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ENABLE_MODULES = YES;

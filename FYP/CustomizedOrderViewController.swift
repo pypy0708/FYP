@@ -52,31 +52,34 @@ class CustomizedOrderViewController: UIViewController {
     
     @IBAction func insert(_ sender: Any) {
         if (productName.text != "") && (price.text != "") && (quantity.text != ""){
-        productNames.append(productName.text!)
-        prices.append(price.text!)
-        quantities.append(quantity.text!)
-        let aquantity = Int(quantity.text!)
-        let aprice = Float(price.text!)
-        let customizedItem = customizedCartItem(productName: productName.text!, quantity: aquantity!, price: aprice!)
-        customizedCart.currentCustomizedCart.customizedCartItems.append(customizedItem)
-        self.tbv.reloadData()
+            productNames.append(productName.text!)
+            prices.append(price.text!)
+            quantities.append(quantity.text!)
+            let aquantity = Int(quantity.text!)
+            let aprice = Float(price.text!)
+            let customizedItem = customizedCartItem(productName: productName.text!, quantity: aquantity!, price: aprice!)
+            customizedCart.currentCustomizedCart.customizedCartItems.append(customizedItem)
+            self.tbv.reloadData()
+            productName.text = ""
+            price.text = ""
+            quantity.text = ""
         } else {
             let alert = UIAlertController(title: "Not enough info", message: "Please provide product name, maximum price and quantity.", preferredStyle: .alert)
             let action = UIAlertAction(title: "OK", style: .default)
             alert.addAction(action)
             self.present(alert, animated: true, completion: nil)
         }
-
+        
     }
     
     @IBAction func create(_ sender: Any) {
         if (customerAddress.text != "") && (customerPhone.text != "") && (shopName.text != "") && (shopAddress.text != "") && productNames.count > 0 {
-        customizedCart.currentCustomizedCart.customerAddress = customerAddress.text
-        customizedCart.currentCustomizedCart.shopName = shopName.text
-        customizedCart.currentCustomizedCart.shopAddress = shopAddress.text
-        customizedCart.currentCustomizedCart.customerPhone = customerPhone.text
-        
-        self.performSegue(withIdentifier: "diffpayment", sender: self)
+            customizedCart.currentCustomizedCart.customerAddress = customerAddress.text
+            customizedCart.currentCustomizedCart.shopName = shopName.text
+            customizedCart.currentCustomizedCart.shopAddress = shopAddress.text
+            customizedCart.currentCustomizedCart.customerPhone = customerPhone.text
+            
+            self.performSegue(withIdentifier: "diffpayment", sender: self)
         } else {
             let alert = UIAlertController(title: "Not enough info", message: "Please input all the infomation and order at least one product.", preferredStyle: .alert)
             let action = UIAlertAction(title: "OK", style: .default)
@@ -128,7 +131,7 @@ extension CustomizedOrderViewController: UITableViewDataSource,UITableViewDelega
 
 extension CustomizedOrderViewController: UITextFieldDelegate{
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-
+        
         let tempinputaddress = textField.text
         let inputaddress = tempinputaddress?.replacingOccurrences(of: " ", with: "%20")
         
@@ -146,7 +149,7 @@ extension CustomizedOrderViewController: UITextFieldDelegate{
                 self.customermarker.position.longitude=lng
                 self.customermarker.map = self.aMap
             }else {
-                self.shopmarker.title = "customer"
+                self.shopmarker.title = "Shop"
                 self.shopmarker.map = nil
                 self.shopmarker.position.latitude=lat
                 self.shopmarker.position.longitude=lng

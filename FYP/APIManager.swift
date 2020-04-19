@@ -33,6 +33,7 @@ class APIManager{
             "token": AccessToken.current!.tokenString,
             "user_type": userType
         ]
+        print(params)
         
         AF.request(url!, method: .post, parameters: params,  headers: nil).responseJSON { (response) in
             
@@ -40,7 +41,7 @@ class APIManager{
             case .success(let value):
                 
                 let jsonData = JSON(value)
-                
+                print(jsonData)
                 self.accessToken = jsonData["access_token"].string!
                 self.refreshToken = jsonData["refresh_token"].string!
                 self.expired = Date().addingTimeInterval(TimeInterval(jsonData["expires_in"].int!))
@@ -50,7 +51,6 @@ class APIManager{
             case .failure(let error):
                 completionHandler(error as NSError?)
                 break
-                
             }
         }
     }
@@ -66,15 +66,8 @@ class APIManager{
         ]
         
         AF.request(url!, method: .post, parameters: params, encoding: URLEncoding(), headers: nil).responseString { (response) in
-            
             switch response.result {
             case .success:
-                //                GraphRequest(graphPath: "/me/permissions/", httpMethod: HTTPMethod.delete).start(completionHandler: { (connection, result, error) in
-                //
-                //                    if (error == nil){
-                //                        completionHandler(nil)
-                //                    }
-                //                })
                 completionHandler(nil)
                 break
             case .failure(let error):
@@ -132,7 +125,6 @@ class APIManager{
                 }
             }
         }
-        
     }
     
     
@@ -170,6 +162,7 @@ class APIManager{
                     "customerAddress": Cart.currentCart.address!
                     
                 ]
+                print(params)
                 requestServer(.post, path, params, URLEncoding(), completionHandler)
             }
             catch{
@@ -179,7 +172,7 @@ class APIManager{
     }
     
     func getOrder(completionHandler: @escaping (JSON?) -> Void){
-        let path = "api/customer/order/latest/"
+        let path = "api/customer/order/last/"
         let params: [String: Any] = [
             "access_token": self.accessToken
         ]
@@ -209,20 +202,25 @@ class APIManager{
             }
         }
     }
-    func getPath (deslat: Double, deslng: Double, sourcelat: Double,sourcelng: Double, completionHandler: @escaping(String) -> Void){
-        requestPath(.get, URLEncoding(),deslat,deslng,sourcelat,sourcelng, completionHandler)
+    func getPath (mode: String,deslat: Double, deslng: Double, sourcelat: Double,sourcelng: Double, completionHandler: @escaping(String) -> Void){
+        requestPath(.get, URLEncoding(),mode,deslat,deslng,sourcelat,sourcelng, completionHandler)
     }
     
-    func requestPath(_ method: Alamofire.HTTPMethod,_ encoding: ParameterEncoding,_ deslat: Double,_ deslng: Double,_ sourcelat: Double,_ sourcelng: Double,_ completionHandler: @escaping (String) -> Void ) {
-        let url = "https://maps.googleapis.com/maps/api/directions/json?origin=\(sourcelat),\(sourcelng)&destination=\(deslat),\(deslng)&mode=walking&key=\(GOOGLE_API_KEY)"
+    func requestPath(_ method: Alamofire.HTTPMethod,_ encoding: ParameterEncoding,_ mode: String,_ deslat: Double,_ deslng: Double,_ sourcelat: Double,_ sourcelng: Double,_ completionHandler: @escaping (String) -> Void ) {
+        let url = "https://maps.googleapis.com/maps/api/directions/json?origin=\(sourcelat),\(sourcelng)&destination=\(deslat),\(deslng)&mode=\(mode)&key=\(GOOGLE_API_KEY)"
+        print(url)
+        print(sourcelat,sourcelng,deslat,deslng)
         AF.request(url, method: method, encoding: encoding).responseJSON{ response in
-            
             switch response.result {
             case .success(let value):
                 let jsonData = JSON(value)
+                print(jsonData)
+                if(jsonData["status"] == "ZERO_RESULTS"){
+                    completionHandler("no")
+                    break
+                }
                 //let pathDict = jsonData["routes"][0]["overview_polyline"]
                 let polyline = jsonData["routes"][0]["overview_polyline"]["points"].string!
-                print(polyline)
                 completionHandler(polyline)
                 break
                 
@@ -233,12 +231,15 @@ class APIManager{
     }
     
     func deliveryManGetOrder(completionHandler: @escaping (JSON?) -> Void){
-        let path = "api/deliveryman/orders/ready/"
-        requestServer(.get, path, nil, URLEncoding(), completionHandler)
+        let path = "api/deliveryman/orders/assigned/"
+        let params: [String: Any] = [
+            "access_token": self.accessToken
+        ]
+        requestServer(.get, path, params, URLEncoding(), completionHandler)
     }
     
     func acceptOrder(orderId: Int,type: String, completionHandler: @escaping (JSON?) -> Void){
-        let path = "api/deliveryman/orders/pick/"
+        let path = "api/deliveryman/orders/accept/"
         let params: [String: Any] = [
             //server does not recognise unless it is a string
             "order_id": "\(orderId)",
@@ -249,7 +250,7 @@ class APIManager{
     }
     
     func deliverymanGetOrderDetails(completionHandler: @escaping (JSON?) -> Void){
-        let path = "api/deliveryman/orders/latest/"
+        let path = "api/deliveryman/orders/last/"
         let params: [String: Any] = [
             "access_token": self.accessToken
         ]
@@ -336,7 +337,23 @@ class APIManager{
         let params: [String: Any] = [
             "access_token": self.accessToken,
         ]
+        requestServer(.get, path, params, URLEncoding(), completionHandler)
+    }
+    
+    func updateMode(completionHandler: @escaping (JSON?) -> Void){
+        let path = "api/deliveryman/mode/update/"
+        let params: [String: Any] = [
+            "access_token": self.accessToken,
+        ]
         requestServer(.post, path, params, URLEncoding(), completionHandler)
+    }
+    
+    func getMode(completionHandler: @escaping (JSON?) -> Void){
+        let path = "api/deliveryman/mode/get/"
+        let params: [String: Any] = [
+            "access_token": self.accessToken,
+        ]
+        requestServer(.get, path, params, URLEncoding(), completionHandler)
     }
     
     func pickupOrder(type: String,orderId: Int,completionHandler: @escaping (JSON?) -> Void){
@@ -347,6 +364,30 @@ class APIManager{
             "order_id": "\(orderId)"
         ]
         requestServer(.post, path, params, URLEncoding(), completionHandler)
+    }
+    
+    func getHistoryOrders(type: String,completionHandler: @escaping (JSON?) -> Void){
+        let path = "api/customer/order/all/"
+        let params: [String: Any] = [
+            "access_token": self.accessToken,
+            "type": type
+        ]
+        requestServer(.get, path, params, URLEncoding(), completionHandler)
+    }
+    
+    func getSpeicificOrder(orderID: Int,type: String,completionHandler: @escaping (JSON?) -> Void){
+        let path = "api/customer/order/specific/\(orderID)/\(type)/"
+        
+        requestServer(.get, path, nil, URLEncoding(), completionHandler)
+    }
+    
+    func deliverymanGetHistoryOrders(type: String,completionHandler: @escaping (JSON?) -> Void){
+        let path = "api/deliveryman/order/all/"
+        let params: [String: Any] = [
+            "access_token": self.accessToken,
+            "type": type
+        ]
+        requestServer(.get, path, params, URLEncoding(), completionHandler)
     }
 }
 

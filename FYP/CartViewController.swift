@@ -82,24 +82,13 @@ class CartViewController: UIViewController {
     
     
     @IBAction func payment(_ sender: Any) {
-        if self.addressTextField.text != "" {
+        if self.addressTextField.text != "" && self.phoneTextField.text != ""{
             Cart.currentCart.address = addressTextField.text
-            self.performSegue(withIdentifier: "payment", sender: self)
-            
-        }else{
-            let alert = UIAlertController(title: "No address", message: "Please input the address.", preferredStyle: .alert)
-            let action = UIAlertAction(title: "OK", style: .default, handler: {(alert) in
-                self.addressTextField.becomeFirstResponder()
-            })
-            alert.addAction(action)
-            self.present(alert, animated: true, completion: nil)
-        }
-        if self.phoneTextField.text != "" {
             Cart.currentCart.phone = phoneTextField.text
             self.performSegue(withIdentifier: "payment", sender: self)
             
         }else{
-            let alert = UIAlertController(title: "No phone", message: "Please input the phone.", preferredStyle: .alert)
+            let alert = UIAlertController(title: "Not enough infomation", message: "Please input all the information.", preferredStyle: .alert)
             let action = UIAlertAction(title: "OK", style: .default, handler: {(alert) in
                 self.addressTextField.becomeFirstResponder()
             })
