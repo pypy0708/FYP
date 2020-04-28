@@ -49,8 +49,6 @@ class OrderViewController: UIViewController {
     func getOrder() {
         APIManager.shared.getOrder{ (json) in
             let order = json?["order"]
-            
-            
             if order?["status"] != nil {
                 if let details = order?["order_details"].array{
                     if order?["type"] == "default"{
@@ -95,7 +93,6 @@ class OrderViewController: UIViewController {
                                 let path = GMSPath(fromEncodedPath: polyline)
                                 self.route.map = nil
                                 self.route = GMSPolyline(path: path)
-                                print("hi\(polyline)")
                                 self.route.strokeWidth = 1
                                 self.route.strokeColor = UIColor.blue
                                 self.route.map = self.aMap
@@ -112,7 +109,6 @@ class OrderViewController: UIViewController {
                                 self.aroute.strokeWidth = 1
                                 self.aroute.strokeColor = UIColor.red
                                 self.aroute.map = self.aMap
-                                
                             }
                         })
                     })
@@ -128,7 +124,6 @@ class OrderViewController: UIViewController {
     @objc func getDeliverymanLocation(_ sender: Any){
         APIManager.shared.getLocation{ (json) in
             if let coordinates = json?["location"].string{
-                self.status.text = "On the way"
                 let separate = coordinates.components(separatedBy: ",")
                 let Slat = separate[0]
                 let Slng = separate[1]

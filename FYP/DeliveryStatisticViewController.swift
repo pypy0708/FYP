@@ -29,8 +29,6 @@ class DeliveryStatisticViewController: UIViewController {
     }
    
     func loadChart() {
-        
-
         chart.noDataText = "There Is No Data"
         chart.animate(xAxisDuration: 2.0, yAxisDuration: 2.0, easingOption: .easeInBounce)
         chart.xAxis.labelPosition = .bottom
@@ -43,7 +41,6 @@ class DeliveryStatisticViewController: UIViewController {
         APIManager.shared.getRevenue { (json) in
             
             if json != nil {
-                
                 let revenue = json?["revenue"]
                 var max: Double = 0
               

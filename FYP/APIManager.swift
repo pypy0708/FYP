@@ -185,7 +185,7 @@ class APIManager{
     
     func requestCoor(_ method: Alamofire.HTTPMethod,_ encoding: ParameterEncoding,_ inputaddress: String,_ completionHandler: @escaping (Double,Double) -> Void ) {
         let url = "https://maps.googleapis.com/maps/api/geocode/json?address=\(inputaddress),+CA&key=\(GOOGLE_API_KEY)"
-        
+        print(url)
         AF.request(url, method: method, encoding: encoding).responseJSON{ response in
             
             switch response.result {

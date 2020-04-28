@@ -3,7 +3,7 @@
     <device id="retina6_5" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -268,7 +268,7 @@
                                         <rect key="frame" x="167" y="45" width="242" height="32"/>
                                         <segments>
                                             <segment title="Walking"/>
-                                            <segment title="Motocycle"/>
+                                            <segment title="Motorcycle"/>
                                         </segments>
                                         <connections>
                                             <action selector="switchDeliveryMode:" destination="vaL-BS-v6C" eventType="valueChanged" id="3XH-td-wPB"/>
@@ -2981,9 +2981,10 @@
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" allowsSelection="NO" rowHeight="240" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="lOF-kD-Lbb">
                                 <rect key="frame" x="0.0" y="138" width="414" height="724"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <color key="separatorColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <inset key="separatorInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                <color key="sectionIndexBackgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="DeliveryHistoryCell" rowHeight="250" id="Xto-cw-n7W" customClass="DeliveryHistoryTableViewCell" customModule="FYP" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="28" width="414" height="250"/>
@@ -3071,6 +3072,7 @@
                                                 <constraint firstItem="2ud-vO-0Xf" firstAttribute="top" secondItem="b46-ay-f4s" secondAttribute="bottom" constant="10" id="xpi-C3-6vn"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                         <connections>
                                             <outlet property="customerAddress" destination="b46-ay-f4s" id="pDL-zE-kaO"/>
                                             <outlet property="customerName" destination="hZU-uM-sFX" id="o2i-0I-XDH"/>
@@ -3097,7 +3099,7 @@
                                 </connections>
                             </pickerView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="lOF-kD-Lbb" firstAttribute="bottom" secondItem="ezq-Dc-1Ue" secondAttribute="bottom" id="0du-Ax-Xdj"/>
                             <constraint firstItem="734-5k-XzI" firstAttribute="top" secondItem="ezq-Dc-1Ue" secondAttribute="top" id="4HR-hL-j2N"/>

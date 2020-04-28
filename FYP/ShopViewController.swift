@@ -103,13 +103,11 @@ extension ShopViewController: UITableViewDelegate, UITableViewDataSource{
         } else{
             shop = shops[indexPath.row]
         }
-        
         cell.shopName.text = shop.name!
         cell.shopAddress.text = shop.address!
         if let logoURL = shop.logo{
             Tools.loadImage( cell.shopLogo,  "\(logoURL)")
         }
-        
         return cell
     }
     
